@@ -1,27 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
-const UserSchema = new Schema({
-  name: {
+const JobSchema = new Schema({
+  title: {
     type: String,
     required: true,
   },
-  email: {
+  duration: {
     type: String,
     required: true,
   },
-  phone: {
-    type: String,
-    required: true,
-  },
-  avatar: {
-    type: String,
-  },
-  role: {
-    type: String,
-    default: "user",
-  },
-  password: {
+  budget: {
     type: String,
     required: true,
   },
@@ -29,17 +17,13 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  verify: {
-    type: String,
-    default: false,
-  },
   status: {
     type: String,
-    default: "online",
+    default: "active",
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
-module.exports = User = mongoose.model("user", UserSchema);
+module.exports = Job = mongoose.model("job", JobSchema);
