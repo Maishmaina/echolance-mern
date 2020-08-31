@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
+
 class Navigation extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,7 @@ class Navigation extends Component {
   };
   onLogoutCLick = (e) => {
     e.preventDefault();
-    console.log("logged in");
+    this.props.logoutUser();
   };
   render() {
     const { isAuthenticated, user } = this.props.auth;
@@ -55,11 +57,6 @@ class Navigation extends Component {
     );
     const guestLinkDesk = (
       <>
-        <li className="nav-item">
-          <Link to="/register" className="nav-link">
-            Be affiliate
-          </Link>
-        </li>
         <li className="nav-item">
           <Link to="/login" className="nav-link">
             Login
@@ -94,10 +91,6 @@ class Navigation extends Component {
     );
     const guestLinkMobile = (
       <>
-        <hr className="border-light" />
-        <Link to="/register">
-          <i className="fa fa-cart-arrow-down fa-1x"></i> Be affiliate
-        </Link>
         <hr className="border-light" />
         <Link to="/login">
           <i className="fa fa-unlock fa-1x"></i> Log In
@@ -151,21 +144,6 @@ class Navigation extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
               <div className="mr-auto"></div>
               <ul className="navbar-nav">
-                <li className="nav-item d-none d-lg-block">
-                  <Link
-                    to="/cart"
-                    className="nav-link mr-lg-2 relativenav"
-                    title="Cart"
-                  >
-                    <i className="fa fa-fw fa-lg fa-shopping-cart"></i>
-                    <span className="new-indicator text-danger">
-                      <i className="fa fa-fw fa-circle"></i>
-
-                      <span className="number">3</span>
-                    </span>
-                  </Link>
-                </li>
-
                 <li className="nav-item">
                   <Link to="/" className="nav-link">
                     Home
@@ -186,13 +164,6 @@ class Navigation extends Component {
           <Link to="/">
             <i className="fa fa-home fa-1x"></i> Home
           </Link>
-          <hr className="border-light" />
-          <Link to="/cart">
-            <span>
-              <i className="fa fa-fw fa-shopping-cart"></i> Active
-              <span className="badge badge-pill badge-danger">3 item</span>
-            </span>
-          </Link>
           {isAuthenticated ? authLinkMobile : guestLinkMobile}
         </div>
       </div>
@@ -200,9 +171,10 @@ class Navigation extends Component {
   }
 }
 Navigation.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps)(Navigation);
+export default connect(mapStateToProps, { logoutUser })(Navigation);

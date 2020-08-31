@@ -102,3 +102,14 @@ exports.currentUser = async (req, res) => {
     status: req.user.status,
   });
 };
+//@desc     Return All User
+//@route    GET api/user/all/users
+//@access   Private
+exports.getAllUsers = async (req, res) => {
+  try {
+    const user = await User.find();
+    res.json(user);
+  } catch (err) {
+    res.status(404).json({ errors: "No User Found" });
+  }
+};

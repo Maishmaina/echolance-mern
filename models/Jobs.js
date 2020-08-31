@@ -17,6 +17,7 @@ const JobSchema = new Schema({
     type: String,
     required: true,
   },
+  jobfile: { type: String },
   status: {
     type: String,
     default: "active",

@@ -22,3 +22,31 @@ exports.getAllJob = async (req, res) => {
   const job = await Job.find();
   res.json(job);
 };
+
+//@desc     Get Jobs by id
+//@route    GET api/job/:id
+//@access   Public
+
+exports.getJobById = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    res.json(job);
+  } catch (err) {
+    res.status(404).json({ nojob: "No Job Found with those Details" });
+  }
+};
+//@desc     Update Jobs by id
+//@route    PUT api/job/updatejob/:id
+//@access   Private
+exports.updateJob = async (req, res) => {
+  try {
+    let job = await Job.findById(req.params.id);
+
+    job = await Job.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(job);
+  } catch (err) {
+    res
+      .status(400)
+      .json({ nojobupdate: "Sorry there is no Job with those Details" });
+  }
+};
